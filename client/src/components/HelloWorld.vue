@@ -50,6 +50,7 @@
           </div>
           <div class="col"></div>
         </div>
+          
         <!-- /row -->
         <div v-if="state.mutableViewGames" class="row">
           <div class="col"></div>

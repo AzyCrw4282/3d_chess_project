@@ -43,7 +43,6 @@ export class B {
 
         B.advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("myUI");
 
-
         B.camera.setPosition(new BABYLON.Vector3(0, 600, 50));
 
         B.camera.lowerBetaLimit = 0.1;
@@ -71,8 +70,6 @@ export class B {
         B.redMat.diffuseColor = new BABYLON.Color3(0.4, 0.4, 0.4);
         B.redMat.specularColor = new BABYLON.Color3(0.4, 0.4, 0.4);
         B.redMat.emissiveColor = BABYLON.Color3.Red();
-
-
 
         B.blackMat = new BABYLON.StandardMaterial("blackMat", B.scene);
         B.blackMat.diffuseColor = new BABYLON.Color3(0.4, 0.4, 0.4);

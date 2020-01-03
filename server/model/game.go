@@ -15,7 +15,7 @@ type ListOfGames struct {
 
 //CreateGameAndRun creates a game and starts it
 func CreateGameAndRun(creator *Player) *Game {
-	game := &Game{
+	game := &Game{ //saves the memory address of this short var declaration
 		ID:       uuid.NewV4().String(),
 		Players:  make(map[int]*Player),
 		Boards:   maxSupportedBoards,

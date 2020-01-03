@@ -44,31 +44,24 @@ func shareState(game *model.Game) {
 //Move moves a piece
 func Move(game *model.Game, client *ws.Client, message *model.MessageMove) (didMove bool) {
 	log.Println(">> Moving ")
-
 	pieceFound, piece, piecePlayer := game.FindPiece(message.PieceID)
-
 	//Can't move a piece that does not exists
 	if !pieceFound {
 		log.Println("Piece not found, " + message.PieceID)
 		return
 	}
-
 	//Get the message sending player
 	player, _, _ := game.PlayerByClient(client)
-
 	//Can this player move?
 	if !player.MyTurn {
 		log.Println("Not my turn!, " + message.PieceID)
 		return
 	}
-
 	//TODO: handle taking pieces off board here
-
 	if piece.IsEqual(message) {
 		log.Println("No move")
 		return
 	}
-
 	//Does this player own this piece?
 	if player != piecePlayer {
 		log.Println("Player does not own piece, " + message.PieceID)
