@@ -19,7 +19,7 @@ func joinGame(game *model.Game, player *model.Player) bool {
 
 //StartGame starts the game for all players
 func startGame(game *model.Game) {
-	ok, msg := game.IsReadyToStart()
+	ok, msg := game.IsReadyToStart() //short var declare
 	if !ok {
 		reply := model.CreateMessageError("Failed to start game", msg)
 		game.Owner.Profile.Client.SendObject(reply)
