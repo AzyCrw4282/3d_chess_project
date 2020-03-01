@@ -1,6 +1,10 @@
 import * as BABYLON from 'babylonjs';
 import * as GUI from 'babylonjs-gui';
 
+
+//access it online here https://playground.babylonjs.com/#UZ23UH#110
+
+
 export class B {
     engine = {};
     scene = {};
@@ -124,21 +128,13 @@ export class B {
             }
         }
 
-
         B.createLabel(1)
         B.createLabel(2)
         B.createLabel(3)
         B.createLabel(4)
 
-
-
-
-
-
         // Events
         B.canvas = B.engine.getRenderingCanvas();
-
-
 
         B.canvas.addEventListener("pointerdown", B.onPointerDown, false);
         B.canvas.addEventListener("pointerup", B.onPointerUp, false);
@@ -492,4 +488,4 @@ export class B {
     }
 
 
-} 
+}
