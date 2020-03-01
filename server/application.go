@@ -15,7 +15,6 @@ var cantStartBeforeFull = flag.String("emptySeat", "true", "Server public domain
 func main() {
 
 	log.Println("Oh hai 🚀 Lets Go 🎠")
-
 	server := model.CreateServer(*publicAddress, controller.HandleIncoming, *cantStartBeforeFull == "true")
 
 	//Blocking call
