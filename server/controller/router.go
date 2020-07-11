@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	inMessageNick        = "nick"
+	inMessageNick        = "nick" //nickname - to set it in the game
 	inMessageStartGame   = "start-game"
 	inMessageCreateGame  = "create-game"
 	inMessageJoinGame    = "join-game"
@@ -19,7 +19,7 @@ const (
 	inMessageDC          = "disconnect"
 )
 
-//HandleIncoming handles messages arriving to the websocket server
+//HandleIncoming handles messages arriving to the websocket server. thses are then handled in `in-message.go` file
 func HandleIncoming(server *model.Server, client *ws.Client, msg *[]byte) {
 	var message model.BaseMessage
 	if err := json.Unmarshal(*msg, &message); err != nil {

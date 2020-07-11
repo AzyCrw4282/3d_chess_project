@@ -104,7 +104,8 @@ func (s *Server) CreateListOfGames() *ListOfGames {
 	return &result //pointer to the result of the games
 }
 
-//CreateMessageListOfGames creates a list of games
+//CreateMessageListOfGames creates a list of games  - uses the above method and outputs it using a
+//json creator in messges class.
 func (s *Server) CreateMessageListOfGames() *MessageListOfGames {
 	list := s.CreateListOfGames()
 	return CreateMessageListOfGames(list)

@@ -7,6 +7,11 @@ import (
 	"log"
 )
 
+/*
+Follow on call from `message-in.go`. Here's where more indepth calls are made to the model.
+This can ofc be simplified but that will then add a another verbose controller files
+*/
+
 func createGameByClient(s *model.Server, client *ws.Client) *model.Game {
 	player := &model.Player{
 		Profile: s.Lobby[client],
