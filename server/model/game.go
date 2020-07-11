@@ -10,7 +10,7 @@ import (
 
 //ListOfGames describes a list of games on the server
 type ListOfGames struct {
-	Games []map[string]string `json:"games"`
+	Games []map[string]string `json:"games"` //optional string values for the field
 }
 
 //CreateGameAndRun creates a game and starts it

@@ -21,7 +21,7 @@ type MoveDescription struct {
 }
 
 func CalcMoveDescription(game *Game, player *Player, piece *Piece, move *MessageMove) *MoveDescription {
-	result := &MoveDescription{}
+	result := &MoveDescription{} //al passed byRef for the benefit that valuec an be directly changed
 
 	//Change in vertical tiles
 	result.YDiff = util.Abs(piece.Y - move.ToY)

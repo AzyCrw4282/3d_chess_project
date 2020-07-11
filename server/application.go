@@ -8,6 +8,7 @@ import (
 	"log"
 )
 
+//sets flag but for cmd line entry but not used parsed in this case.
 var addr = flag.String("addr", "127.0.0.1:8000", "http service address")
 var publicAddress = flag.String("public", "local", "Server public domain name")
 var cantStartBeforeFull = flag.String("emptySeat", "true", "Server public domain name")
