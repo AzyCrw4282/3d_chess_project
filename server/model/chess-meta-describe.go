@@ -4,6 +4,7 @@ import (
 	"github.com/team142/angrychess/util"
 )
 
+//TODO: check all below
 type MoveDescription struct {
 	XDiff             int
 	YDiff             int

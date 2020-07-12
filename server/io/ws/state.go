@@ -9,6 +9,7 @@ import (
 	"time"
 )
 
+//defines const values
 const (
 	writeWait      = 10 * time.Second
 	pongWait       = 60 * time.Second

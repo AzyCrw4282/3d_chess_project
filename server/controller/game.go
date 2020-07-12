@@ -6,7 +6,9 @@ import (
 	"log"
 )
 
-//JoinGame gets a player into a game --
+//Final class in Controller before requests are directed to the model base
+
+//JoinGame gets a player into a game --finds a spot and sets them to join
 func joinGame(game *model.Game, player *model.Player) bool {
 	found, spot := game.FindSpot()
 	if !found {
@@ -17,7 +19,7 @@ func joinGame(game *model.Game, player *model.Player) bool {
 	return true
 }
 
-//StartGame starts the game for all players
+//StartGame starts the game for all players-- starts and sets the share state for all player data transmission
 func startGame(game *model.Game) {
 	ok, msg := game.IsReadyToStart() //short var declare
 	if !ok {
@@ -32,7 +34,7 @@ func startGame(game *model.Game) {
 
 }
 
-//ShareState tells all players what is going on
+//ShareState tells all players what is going on -- important function, similar to implementaion in java
 func shareState(game *model.Game) {
 	reply := model.CreateMessageShareState(game)
 	for _, player := range game.Players {
@@ -41,7 +43,7 @@ func shareState(game *model.Game) {
 
 }
 
-//Move moves a piece
+//Move moves a piece -- performs all required checks. Can be simplfiied and overal improved
 func Move(game *model.Game, client *ws.Client, message *model.MessageMove) (didMove bool) {
 	log.Println(">> Moving ")
 	pieceFound, piece, piecePlayer := game.FindPiece(message.PieceID)
@@ -62,7 +64,7 @@ func Move(game *model.Game, client *ws.Client, message *model.MessageMove) (didM
 		log.Println("No move")
 		return
 	}
-	//Does this player own this piece?
+	//current player same as piece-player?
 	if player != piecePlayer {
 		log.Println("Player does not own piece, " + message.PieceID)
 		return
@@ -101,7 +103,7 @@ func Move(game *model.Game, client *ws.Client, message *model.MessageMove) (didM
 	return
 }
 
-//announce announces something to all players
+//announce announces something to all players in a given game, i.e. whole game broadcast
 func announce(game *model.Game, i interface{}) {
 	for _, player := range game.Players {
 		player.Profile.Client.SendObject(i)

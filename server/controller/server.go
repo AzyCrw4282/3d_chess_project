@@ -118,6 +118,7 @@ func changeSeatByClient(s *model.Server, client *ws.Client, seat int) {
 		})
 }
 
+//creates a unique name and checks that it doesnt exist
 func createUniqueNick(s *model.Server, nickIn string) string {
 	nick := nickIn
 	ok := false
@@ -134,13 +135,14 @@ func createUniqueNick(s *model.Server, nickIn string) string {
 			break
 		}
 		i++
-		nick = fmt.Sprintf("%s%v", nickIn, i)
+		nick = fmt.Sprintf("%s%v", nickIn, i) //like <NickName><GameNo>
 	}
 	return nick
 
 }
 
 //disconnect handles changes to server state when someone a websocket disconnects
+//simply disconnects with prior checking and notifying.
 func disconnect(s *model.Server, client *ws.Client) {
 	log.Println(">> Going to handle disconnect")
 	found, game := s.GameByClientPlaying(client)
@@ -163,10 +165,9 @@ func disconnect(s *model.Server, client *ws.Client) {
 	if notify {
 		notifyLobby(s)
 	}
-
 }
 
-//notifyLobby tells players without a game about a new game
+//notifyLobby tells players without a game
 func notifyLobby(s *model.Server) {
 	reply := model.CreateMessageListOfGames(s.CreateListOfGames())
 	for client := range s.Lobby {

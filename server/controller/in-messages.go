@@ -8,6 +8,8 @@ import (
 	"log"
 )
 
+//TODO: start here
+
 /*
 handles all incoming msgs and passes the msg to the model.
 All cmds for all are made here. Initially originating from the `view` point.
