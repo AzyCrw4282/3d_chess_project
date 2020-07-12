@@ -9,9 +9,9 @@ import (
 
 /*
 Follow on call from `message-in.go`. Here's where more indepth calls are made to the model.
-This can ofc be simplified but that will then add a another verbose controller files
+This can ofc be simplified but that will then add a another  controller file
 */
-
+//main client handling here, including channel function call for doWork
 func createGameByClient(s *model.Server, client *ws.Client) *model.Game {
 	player := &model.Player{
 		Profile: s.Lobby[client],
@@ -33,7 +33,7 @@ func createGameByClient(s *model.Server, client *ws.Client) *model.Game {
 	return game
 }
 
-//joinGame for easy access
+//joinGame for easy access -- similar to above but joining process
 func joinGameByClient(s *model.Server, gameID string, p *model.Profile) *model.Game {
 	player := &model.Player{
 		Profile: s.Lobby[p.Client],
@@ -63,7 +63,6 @@ func joinGameByClient(s *model.Server, gameID string, p *model.Profile) *model.G
 func setNick(s *model.Server, client *ws.Client, nick string) {
 
 	nick = createUniqueNick(s, nick)
-
 	profile := s.GetOrCreateProfile(client)
 	profile.Nick = nick
 
@@ -74,7 +73,7 @@ func setNick(s *model.Server, client *ws.Client, nick string) {
 
 }
 
-//StartGame starts a game if possible
+//StartGame starts a game if possible-- start call
 func startGameByClient(s *model.Server, client *ws.Client) {
 	found, game := s.GameByClientOwner(client)
 	if !found {
@@ -89,7 +88,7 @@ func startGameByClient(s *model.Server, client *ws.Client) {
 
 }
 
-//move attempts to move a piece
+//move attempts to move a piece -- move piece. gets which of the game on the screen and sets the game to be played
 func move(s *model.Server, message *model.MessageMove, client *ws.Client) {
 	foundGame, game := s.GameByClientPlaying(client)
 	if !foundGame {
@@ -99,18 +98,15 @@ func move(s *model.Server, message *model.MessageMove, client *ws.Client) {
 
 	game.DoWork(
 		func(game *model.Game) {
-			//TODO: figure out where this logic should sit
 			didMove := Move(game, client, message)
 			if didMove {
 				game.ChangeMoveFrom(client)
 			}
 			shareState(game)
-
 		})
-
 }
 
-//changeSeat changes where a player sits
+//changeSeat changes where a player sits -- Same approach but logic adapted for the case
 func changeSeatByClient(s *model.Server, client *ws.Client, seat int) {
 	_, game := s.GameByClientPlaying(client)
 

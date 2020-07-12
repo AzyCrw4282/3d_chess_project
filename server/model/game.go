@@ -13,23 +13,6 @@ type ListOfGames struct {
 	Games []map[string]string `json:"games"` //optional string values for the field
 }
 
-//CreateGameAndRun creates a game and starts it
-func CreateGameAndRun(creator *Player) *Game {
-	game := &Game{ //saves the memory address of this short var declaration
-		ID:       uuid.NewV4().String(),
-		Players:  make(map[int]*Player),
-		Boards:   maxSupportedBoards,
-		Title:    fmt.Sprintf("%s's game", creator.Profile.Nick),
-		Commands: make(chan func(*Game), 256),
-		stop:     make(chan bool),
-	}
-	game.Players[1] = creator
-	game.Owner = creator
-	creator.SetTeamColorAndBoard(1, game.Boards)
-	go game.run()
-	return game
-}
-
 //Game describes a game on the server
 type Game struct {
 	ID                 string           `json:"id"`
@@ -43,11 +26,33 @@ type Game struct {
 	stop               chan bool        `json:"-"`
 }
 
+//CreateGameAndRun creates a game and starts it //creates a game struct and then starts the game with a go routine
+//whilst main thread returns the instance
+func CreateGameAndRun(creator *Player) *Game {
+	game := &Game{ //saves the memory address of this short var declaration
+		ID:       uuid.NewV4().String(),
+		Players:  make(map[int]*Player),
+		Boards:   maxSupportedBoards,
+		Title:    fmt.Sprintf("%s's game", creator.Profile.Nick),
+		Commands: make(chan func(*Game), 256),
+		stop:     make(chan bool),
+	}
+	game.Players[1] = creator
+	game.Owner = creator
+	creator.SetTeamColorAndBoard(1, game.Boards)
+	go game.run() //runs on a routine this
+	return game
+}
+
 //DoWork Adds a function of work that must run in the game's go-routine.
+//with the receiver parm and the funcitn accepts a parameter that passes into a command channel
 func (game *Game) DoWork(f func(*Game)) {
 	game.Commands <- f
 }
 
+//mainly channel handling for the game for running and stopping.
+//For running - game commands are fed to the case and stop is also checked. If any of these are rdy
+//other channel process will wait and any of this will run
 func (game *Game) run() {
 	for {
 		select {
@@ -62,11 +67,12 @@ func (game *Game) run() {
 	}
 }
 
-//Stop stops the game from running
+//Stop stops the game from running--sets the boolean here for the above function
 func (game *Game) Stop() {
 	game.stop <- true
 }
 
+//player find spot- it can be simplified
 func (game *Game) FindSpot() (found bool, spot int) {
 	if len(game.Players) >= game.MaxPlayers() {
 		return false, 0
@@ -79,7 +85,7 @@ func (game *Game) FindSpot() (found bool, spot int) {
 	return false, 0
 }
 
-//FindPiece fiends a piece and it's context
+//FindPiece fiends a piece and it's context -
 func (game *Game) FindPiece(pieceID string) (found bool, piece *Piece, player *Player) {
 	for _, player := range game.Players {
 		piece, found := player.GetPieceByID(pieceID)

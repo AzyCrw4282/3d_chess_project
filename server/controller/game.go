@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-//JoinGame gets a player into a game
+//JoinGame gets a player into a game --
 func joinGame(game *model.Game, player *model.Player) bool {
 	found, spot := game.FindSpot()
 	if !found {
