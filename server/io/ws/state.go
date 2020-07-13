@@ -9,6 +9,10 @@ import (
 	"time"
 )
 
+/*
+Keeps track of all clients using a hub
+*/
+
 //defines const values
 const (
 	writeWait      = 10 * time.Second
@@ -31,7 +35,7 @@ var upgrader = websocket.Upgrader{
 }
 
 //Hub keeps track of all connected clients
-//acts as the wrapper for all inerncal connectons made
+//acts as the wrapper for all internal connectons made
 type Hub struct {
 	clients    map[*Client]bool
 	register   chan *Client
@@ -40,7 +44,7 @@ type Hub struct {
 
 func newHub() *Hub {
 	return &Hub{
-		register:   make(chan *Client),
+		register:   make(chan *Client), // make channel of type client-> used for client communication
 		unregister: make(chan *Client),
 		clients:    make(map[*Client]bool),
 	}
@@ -52,13 +56,14 @@ type Client struct {
 	conn    *websocket.Conn
 	send    chan []byte
 	CanSend bool
-	handler func(*Client, *[]byte)
+	handler func(*Client, *[]byte) // anonymous function as a field for the struct
 }
 
 func (c *Client) handleMessage(msg *[]byte) {
 	go c.handler(c, msg) //TODO: is this right?
 }
 
+//msg sent to the channel handling array of bytes
 func (c *Client) sendBytes(msg []byte) {
 	if c.CanSend {
 		c.send <- msg

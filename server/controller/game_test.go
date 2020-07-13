@@ -5,6 +5,7 @@ import (
 	"testing"
 )
 
+//All tests that assess for the core functionality
 func TestFindSpotEmptyGame(t *testing.T) {
 	game := model.Game{Boards: 2}
 	expectedFound := true

@@ -8,12 +8,10 @@ import (
 	"log"
 )
 
-//TODO: start here
-
 /*
 handles all incoming msgs and passes the msg to the model.
-All cmds for all are made here. Initially originating from the `view` point.
-Most method defs are straightforward.
+All cmds to the next layer are made here. Initially originating from the `view` point.
+Most methods  are straightforward.
 */
 
 func handleInMessageStartGame(server *model.Server, client *ws.Client) {
@@ -29,6 +27,7 @@ func handleInMessageNick(server *model.Server, client *ws.Client, msg *[]byte) {
 	setNick(server, client, message.Nick)
 }
 
+// unmarshalls the given string and calls move option
 func handleInMessageMove(server *model.Server, client *ws.Client, msg *[]byte) {
 	message := &model.MessageMove{}
 	if err := json.Unmarshal(*msg, message); err != nil {
@@ -50,6 +49,9 @@ func handleInMessageListOfGame(server *model.Server, client *ws.Client) {
 	}()
 }
 
+/*
+All methods follow the same applied logic in its each case
+*/
 func handleInMessageJoinGame(server *model.Server, client *ws.Client, msg *[]byte) {
 	var message model.MessageJoinGame
 	if err := json.Unmarshal(*msg, &message); err != nil {

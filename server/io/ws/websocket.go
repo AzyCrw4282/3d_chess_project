@@ -30,15 +30,24 @@ func serveWs(hub *Hub, handler func(*Client, *[]byte), w http.ResponseWriter, r 
 		log.Println(err)
 		return
 	}
+	//handler is of type HandleMessage function from class Server TODO:check the exact operation here!!!
 	client := &Client{Hub: hub, conn: conn, CanSend: true, send: make(chan []byte, 256), handler: handler}
 	client.Hub.register <- client
 
+	//separate go-routine for reading and writing
 	go client.writePump()
 	go client.readPump()
 }
 
+/*
+A defer statement defers the execution of a function until the surrounding function returns.
+
+The deferred call's arguments are evaluated immediately,
+but the function call is not executed until the surrounding function returns.
+*/
+
 func (c *Client) readPump() {
-	defer func() {
+	defer func() { //won't run until the main function has returned
 		c.Hub.unregister <- c
 		c.conn.Close()
 	}()
@@ -58,15 +67,16 @@ func (c *Client) readPump() {
 	}
 }
 
+//a simple method-> uses a ticker to keep connnection alive and  c.send() to actively communicate.
 func (c *Client) writePump() {
 	ticker := time.NewTicker(pingPeriod)
 	defer func() {
 		ticker.Stop()
 		c.conn.Close()
 	}()
-	for {
+	for { // runs in a continious loop to write feed of msgs
 		select {
-		case message, ok := <-c.send:
+		case message, ok := <-c.send: // channell sends in the data
 			c.conn.SetWriteDeadline(time.Now().Add(writeWait))
 			if !ok {
 				// The Hub closed the channel.
