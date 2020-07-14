@@ -67,7 +67,7 @@ func (c *Client) readPump() {
 	}
 }
 
-//a simple method-> uses a ticker to keep connnection alive and  c.send() to actively communicate.
+//a simple method-> uses a ticker to keep connection alive and  c.send() to actively communicate.
 func (c *Client) writePump() {
 	ticker := time.NewTicker(pingPeriod)
 	defer func() {
@@ -75,7 +75,7 @@ func (c *Client) writePump() {
 		c.conn.Close()
 	}()
 	for { // runs in a continious loop to write feed of msgs
-		select {
+		select { //runs any channels as long as they can send a value to it
 		case message, ok := <-c.send: // channell sends in the data
 			c.conn.SetWriteDeadline(time.Now().Add(writeWait))
 			if !ok {

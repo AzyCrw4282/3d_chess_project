@@ -14,6 +14,7 @@ func OrderPoints(p1, p2 int) (int, int) {
 	return p2, p1
 }
 
+//TODO: iff untilTiles need to be checked for differnt direction
 func GetDirection(p1, p2 int) int {
 	if p1 == p2 {
 		return 0

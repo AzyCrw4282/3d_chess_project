@@ -1,5 +1,9 @@
 package model
 
+/*
+Handles pieces, all objects excluding squares are pieces on the board
+*/
+
 const (
 	identityPawn   = 1
 	identityKnight = 2

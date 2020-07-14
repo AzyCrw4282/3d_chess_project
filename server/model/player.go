@@ -14,7 +14,7 @@ type Player struct {
 
 //GetPieceByID for easy access
 func (p *Player) GetPieceByID(id string) (piece *Piece, found bool) {
-	for _, p := range p.Pieces {
+	for _, p := range p.Pieces { //index and struct instances, similar to enum in python
 		if p.ID == id {
 			piece, found = p, true
 			return
@@ -42,6 +42,7 @@ func (p *Player) SetTeamColorAndBoard(spot int, boards int) {
 }
 
 //SetupBoard initializes the board and players
+//adds the required pieces. Mainly straightforward
 func (p *Player) SetupBoard() {
 	if !p.Color {
 		p.MyTurn = true
@@ -58,7 +59,7 @@ func (p *Player) SetupBoard() {
 			Board:    p.Board,
 		}
 		if p.Team == 1 {
-			piece.Y = 7
+			piece.Y = 7 //x -> , y down-facing so that horizontal line of y is that number
 		} else {
 			piece.Y = 2
 		}

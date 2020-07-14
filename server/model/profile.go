@@ -5,7 +5,7 @@ import (
 	"github.com/team142/angrychess/io/ws"
 )
 
-//CreateProfile for easy access
+//CreateProfile for easy access to a new client
 func createProfile(client *ws.Client) *Profile {
 	return &Profile{Client: client, Secret: uuid.NewV4().String(), ID: uuid.NewV4().String()}
 }

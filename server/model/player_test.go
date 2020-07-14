@@ -2,6 +2,8 @@ package model
 
 import "testing"
 
+//All tests are performed in standard way to check for anomalies
+//straight-forward. It can be ehnhacned for futher robust testing
 func TestPlayer_SetTeamAndColorNormal(t *testing.T) {
 	p := Player{}
 	p.SetTeamColorAndBoard(1, 2)

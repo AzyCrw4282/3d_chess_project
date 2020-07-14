@@ -8,6 +8,8 @@ import (
 	"log"
 )
 
+//TODO: start here-----------------
+
 //ListOfGames describes a list of games on the server
 type ListOfGames struct {
 	Games []map[string]string `json:"games"` //optional string values for the field
