@@ -2,6 +2,10 @@ package model
 
 import "log"
 
+/*
+Evaluaes if a move by a rook is possible or not.
+*/
+
 func isMovePossibleRook(player *Player, description *MoveDescription) (ok bool, wouldTake *Piece, msg string) {
 
 	//For now moving boards is not possible

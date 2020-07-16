@@ -1,7 +1,6 @@
 package model
 
 //includees intital msgs for all and most self-explanatory.
-
 //BaseMessage for all incoming messages
 type BaseMessage struct {
 	Msg string `json:"msg"`

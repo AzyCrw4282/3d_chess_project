@@ -7,6 +7,8 @@ const (
 	ViewBoard = "view-board"
 )
 
+//Creates msgs to be sent to the front-end. A neat way to do so.
+
 //CreateMessageSecret for easy access
 func CreateMessageSecret(secret, id string) *MessageSecret {
 	return &MessageSecret{Msg: "secret", Secret: secret, ID: id}

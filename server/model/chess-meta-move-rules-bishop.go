@@ -2,6 +2,7 @@ package model
 
 import "log"
 
+//checks for the move
 func isMovePossibleBishop(player *Player, description *MoveDescription) (ok bool, wouldTake *Piece, msg string) {
 
 	//For now moving boards is not possible

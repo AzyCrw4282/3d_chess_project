@@ -8,7 +8,7 @@ import (
 	"log"
 )
 
-//TODO: start here-----------------
+//TODO: start here----------------- From board.go to messages-out.go
 
 //ListOfGames describes a list of games on the server
 type ListOfGames struct {
@@ -53,8 +53,7 @@ func (game *Game) DoWork(f func(*Game)) {
 }
 
 //mainly channel handling for the game for running and stopping.
-//For running - game commands are fed to the case and stop is also checked. If any of these are rdy
-//other channel process will wait and any of this will run
+//For running - game commands are fed to the case and stop is also checked. If any of these are rdy that will run
 func (game *Game) run() {
 	for {
 		select {

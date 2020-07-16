@@ -22,7 +22,7 @@ type MoveDescription struct {
 }
 
 func CalcMoveDescription(game *Game, player *Player, piece *Piece, move *MessageMove) *MoveDescription {
-	result := &MoveDescription{} //al passed byRef for the benefit that valuec an be directly changed
+	result := &MoveDescription{} //all passed byRef for the benefit that valuec an be directly changed
 
 	//Change in vertical tiles
 	result.YDiff = util.Abs(piece.Y - move.ToY)
@@ -37,7 +37,7 @@ func CalcMoveDescription(game *Game, player *Player, piece *Piece, move *Message
 	result.BeingPlaced = piece.Cache && !move.Cache
 
 	//Is it going from the board to the cache
-	result.BeingRemoved = !piece.Cache && move.Cache
+	result.BeingRemoved = !piece.Cache && move.Cache // the separate board
 
 	//Is it moving to another board
 	result.MovingBoards = piece.Board != move.Board
@@ -68,6 +68,7 @@ Outer:
 
 }
 
+//main method that checks for pieces in between it.
 func CalcPiecesBetween(game *Game, player *Player, piece *Piece, move *MessageMove, result *MoveDescription) {
 	//Don't worry about one tile
 	if result.XDiff+result.YDiff <= 1 {
