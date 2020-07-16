@@ -68,6 +68,7 @@ Outer:
 
 }
 
+//TODO: understand logic and workout uml diagrams.
 //main method that checks for pieces in between it.
 func CalcPiecesBetween(game *Game, player *Player, piece *Piece, move *MessageMove, result *MoveDescription) {
 	//Don't worry about one tile
