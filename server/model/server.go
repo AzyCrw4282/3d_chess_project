@@ -28,17 +28,17 @@ type item struct {
 func CreateServer(address string, handler func(*Server, *ws.Client, *[]byte), canStartBeforeFull bool) *Server {
 	s := &Server{ //address is returned for the struct including
 		Address:            address,
-		handler:            handler,
+		handler:            handler, // this handler handles everything between controller and model, inc. inMessage.go
 		Lobby:              make(map[*ws.Client]*Profile),
 		Games:              make(map[string]*Game),
 		Todo:               make(chan *item, 256),
 		CanStartBeforeFull: canStartBeforeFull,
 	}
-	s.run()
+	s.run() //calls to run the handler
 	return s
 }
 
-// runs the server using a poitner receiver to directly apply byRef change
+// runs the server as a handler using a goroutine
 func (s *Server) run() {
 	go func() {
 		for i := range s.Todo {
@@ -76,7 +76,7 @@ func (s *Server) HandleMessage(client *ws.Client, msg *[]byte) {
 		client: client,
 		msg:    msg,
 	}
-	s.Todo <- i // passes item struct into the toodo channel to communicate with multiple goroutines
+	s.Todo <- i // passes item struct into the toodo channel to communicate with model data, ahaha
 
 }
 

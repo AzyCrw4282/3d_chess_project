@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-//StartWSServer starts a  websocket server
+//StartWSServer starts a  websocket server- > *handler* is what enable client/server communication via sockets
 func StartWSServer(addr *string, handler func(*Client, *[]byte)) {
 
 	flag.Parse()
