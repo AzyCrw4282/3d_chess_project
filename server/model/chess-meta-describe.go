@@ -54,7 +54,7 @@ func CalcMoveDescription(game *Game, player *Player, piece *Piece, move *Message
 	//Pieces between the from tile and to tile
 	CalcPiecesBetween(game, player, piece, move, result)
 
-Outer:
+Outer: // a label in golang
 	for _, pl := range game.Players {
 		for _, pi := range pl.Pieces {
 			if pi.IsEqual(move) {
